@@ -46,13 +46,34 @@ if (Meteor.isClient) {
 
   Template.hello.events({
     'click button': function () {
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+      Meteor.call('sendEmail',
+            '9737234645@txt.att.net',
+            'water@brown.edu',
+            'Hello from Meteor!',
+            'This is a test of Email.send.');
     }
   });
 }
 
 
+Meteor.methods({
+  sendEmail: function (to, from, subject, text) {
+    Email.send({
+      to: to,
+      from: from,
+      subject: subject,
+      text: text
+    });
+
+  // Let other method calls from the same client start running,
+  // without waiting for the email sending to complete.
+  this.unblock();
+
+
+}})
+
 if (Meteor.isServer) {
-  
+  Meteor.startup( function() {
+  process.env.MAIL_URL = "smtp://postmaster@sandboxdfe1e7846a90444588f960fba7f0c953.mailgun.org:3a5dbee9bcc9fe84292c92cfdf44dc1c@smtp.mailgun.org:587";
+});
 }
