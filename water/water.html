@@ -1,9 +1,9 @@
 <head>
   <title>water</title>
-  <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
 </head>
 
 <body>
+<<<<<<< HEAD
   <div id = "title">
     <h1>HIIDRAT</h1>
   </div>
@@ -25,13 +25,26 @@
   </div>
 
   <article>
+=======
+  <h1>Welcome to Meteor!</h1>
+>>>>>>> 86075c03815ab0300d02568d7a3f54d0d1f5b73b
 
-  </article>
-  {{map}}
-  {{> hello}}
+  {{> map}}
 </body>
+<<<<<<< HEAD
 <template name="hello">
   <button>Time to Hydrate</button>
   <p>You've pressed the button {{counter}} times.</p>
+=======
+
+<template name="map">
+  <div class="map-container">
+    {{#unless geolocationError}}
+      {{> googleMap name="map" options=mapOptions}}
+    {{else}}
+      Geolocation failed: {{geolocationError}}
+    {{/unless}}
+  </div>
+>>>>>>> 86075c03815ab0300d02568d7a3f54d0d1f5b73b
 </template>
 
