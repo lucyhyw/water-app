@@ -132,6 +132,6 @@ Meteor.methods({
 
 if (Meteor.isServer) {
   Meteor.startup( function() {
-  process.env.MAIL_URL = "smtp://postmaster@sandboxdfe1e7846a90444588f960fba7f0c953.mailgun.org:3a5dbee9bcc9fe84292c92cfdf44dc1c@smtp.mailgun.org:587";
+  process.env.MAIL_URL = "smtp://postmaster@sandboxbb92cafd2d7c4ebca8faa12a3e56ba6e.mailgun.org:605b6c9b454e4cb83ee816922fd83a70@smtp.mailgun.org:587";
 });
 }
