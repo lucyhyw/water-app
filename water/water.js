@@ -24,26 +24,43 @@ if (Meteor.isClient) {
             position: new google.maps.LatLng(latLng.lat, latLng.lng),
             map: map.instance
           });
-          geocodeAddress(geocoder, resultsMap, "1 Prospect St Providence, RI 02912");
+          // geocodeAddress(geocoder, resultsMap, "1 Prospect St Providence, RI 02912");
 
           wf2 = new google.maps.Marker({
             position: new google.maps.LatLng(latLng.lat, latLng.lng),
             map: map.instance
           });
 
-          function geocodeAddress(geocoder, resultsMap, address) {
-             geocoder.geocode({'address': address}, function(results, status) {
-               if (status === google.maps.GeocoderStatus.OK) {
-                 resultsMap.setCenter(results[0].geometry.location);
-                 var marker = new google.maps.Marker({
-                   map: resultsMap,
-                   position: results[0].geometry.location
-                 });
-               } else {
-                 alert('Geocode was not successful for the following reason: ' + status);
-               }
-             });
-           }
+
+                    // takes a value from Mark and then also sends a text message
+          $.getJSON("https://api.particle.io/v1/devices/2a0033000a47343232363230/analogvalue?access_token=b3a37050b8109deebfc7229155d24069b6dc2f1b",
+              function(data) {
+                console.log(data["result"]);
+                var waterLevel = data["result"];
+                if (waterLevel > 700) {
+                   Meteor.call('sendEmail',
+                    '9737234645@txt.att.net',
+                    'hi.drate@gmail.com',
+                    'Hey there!',
+                    'Time to fill up that water bottle friend!');
+                }
+
+              });
+    
+
+          // function geocodeAddress(geocoder, resultsMap, address) {
+          //    geocoder.geocode({'address': address}, function(results, status) {
+          //      if (status === google.maps.GeocoderStatus.OK) {
+          //        resultsMap.setCenter(results[0].geometry.location);
+          //        var marker = new google.maps.Marker({
+          //          map: resultsMap,
+          //          position: results[0].geometry.location
+          //        });
+          //      } else {
+          //        alert('Geocode was not successful for the following reason: ' + status);
+          //      }
+          //    });
+          //  }
 
         }
         // The marker already exists, so we'll just change its position.
@@ -60,12 +77,13 @@ if (Meteor.isClient) {
 
   Template.body.events({
     'click button': function () {
+
       Meteor.call('sendEmail',
             '9737234645@txt.att.net',
-            'water@brown.edu',
-            'Hello from Meteor!',
-            'This is a test of Email.send.');
-    }
+            'hi.drate@gmail.com',
+            'Hey there!',
+            'Time to fill up that water bottle friend!');
+      }
   });
 
   Template.map.helpers({
