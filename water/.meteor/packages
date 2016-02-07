@@ -19,11 +19,7 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
 
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 6f48d6cafa4340168454227c46a86c9b2e429595
 mdg:geolocation
 raix:push
 meteorhacks:npm
