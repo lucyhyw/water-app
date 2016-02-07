@@ -9,24 +9,29 @@
 
   <div id = "caption">
     <h3>By: Lucy Wei, Ankita Sharma, Jane Han, & Mark Liang</h3>
-    <h4> Contact us at <a href= "www.hi.drate@gmail.com"</a></h4>
   </div>
 
   <div id = "logo">
     <img src= "logo.jpg"/>
   </div>
 
+  <div id = "jane">
+    <img src = "jane.jpg"/>
+  </div>
+
+  <div id = "team">
+    <img src = "team.jpg"/>
+  </div>
+
   <article>
   </article>
+
   {{> map}}
 </body>
-
 <template name="hello">
   <button>Time to Hydrate</button>
   <p>You've pressed the button {{counter}} times.</p>
 </template>
-
-
 <template name="map">
   <div class="map-container">
     {{#unless geolocationError}}
@@ -35,5 +40,8 @@
       Geolocation failed: {{geolocationError}}
     {{/unless}}
   </div>
+  <div id="location">
+  </div>
+  <div id="yay"></div>
+  <button id="updateData">Update my Water Level!</button>
 </template>
-

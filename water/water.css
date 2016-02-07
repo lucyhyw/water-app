@@ -8,7 +8,7 @@
 	padding-right: 15vw;
 	display: block;
 
-	font-family: MV Boli; 
+	font-family: MV Boli;
 	font-size: 30px;
 	background-color: DarkCyan;
 	color: Black;
@@ -22,7 +22,7 @@
 	padding-right: 15vw;
 	display: block;
 
-	font-family: MV Boli; 
+	font-family: MV Boli;
 	font-size: 10px;
 	color: black;
 	background-color: Salmon;
@@ -32,6 +32,15 @@
 #logo img {
 	float: left;
 	height: 400px;
+}
+
+#team img {
+	height: 200px;
+
+}
+
+#jane img {
+	height: 200px;
 }
 
 .map-container {
