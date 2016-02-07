@@ -109,7 +109,7 @@ Template.body.events({
     "click #cell-submit": function() {
       console.log($("#cell-number").val())
       Session.set("cell-number", $("#cell-number").val());
-      document.getElementById("phoneNumber").innerHTML = Session.get("cell-number")
+      document.getElementById("phoneNumber").innerHTML = "Your cell phone number:" + Session.get("cell-number")
     }
 })
 }
