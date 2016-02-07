@@ -1,5 +1,51 @@
+<<<<<<< HEAD
+/* CSS declarations go here */
+#title {
+	width: 70vw;
+	position: relative;
+	padding: 3vh;
+	padding-left: 15vw;
+	padding-right: 15vw;
+	display: block;
+
+	font-family: MV Boli; 
+	font-size: 30px;
+	background-color: DarkCyan;
+	color: Black;
+}
+
+#caption {
+	width: 70vw;
+	position: left;
+	padding: 3vh;
+	padding-left: 15vw;
+	padding-right: 15vw;
+	display: block;
+
+	font-family: MV Boli; 
+	font-size: 10px;
+	color: black;
+	background-color: Salmon;
+
+}
+
+#logo img {
+	float: left;
+	height: 400px;
+}
+
+#team img {
+	height: 200px;
+	
+}
+
+#jane img {
+	height: 200px;
+
+=======
 .map-container {
   width: 800px;
   max-width: 100%;
   height: 500px;
+>>>>>>> 86075c03815ab0300d02568d7a3f54d0d1f5b73b
 }
