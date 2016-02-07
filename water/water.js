@@ -3,6 +3,13 @@ if (Meteor.isClient) {
   Meteor.startup(function() {
     GoogleMaps.load();
   })
+  var temp =        $.getJSON("https://api.particle.io/v1/devices/2a0033000a47343232363230/analogvalue?access_token=b3a37050b8109deebfc7229155d24069b6dc2f1b",
+          function(data) {
+            console.log(data["result"]);
+            Session.set("waterLevel", data["result"]);
+          });
+  Session.set("waterLevel", temp);
+  // takes a value from Mark and then also sends a text message
 
   Template.map.onCreated(function() {
     var self = this;
@@ -11,7 +18,20 @@ if (Meteor.isClient) {
       var marker;
       var geocoder = new google.maps.Geocoder();
 
-
+      // distance calculator
+      function distance(lat1, lon1, lat2, lon2, unit) {
+      	var radlat1 = Math.PI * lat1/180
+      	var radlat2 = Math.PI * lat2/180
+      	var theta = lon1-lon2
+      	var radtheta = Math.PI * theta/180
+      	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      	dist = Math.acos(dist)
+      	dist = dist * 180/Math.PI
+      	dist = dist * 60 * 1.1515
+      	if (unit=="K") { dist = dist * 1.609344 }
+      	if (unit=="N") { dist = dist * 0.8684 }
+      	return dist
+      }
       // Create and move the marker when latLng changes.
       self.autorun(function() {
         var latLng = Geolocation.latLng();
@@ -26,7 +46,7 @@ if (Meteor.isClient) {
           });
 
           new google.maps.Marker({
-            position: new google.maps.LatLng(41.826867, -71.402973),
+            position: new google.maps.LatLng(41.825753, -71.403183),
             map: map.instance
           });
 
@@ -34,46 +54,29 @@ if (Meteor.isClient) {
             position: new google.maps.LatLng(41.826178, -71.402760),
             map: map.instance
           });
-
-          // distance calculator
-          function distance(lat1, lon1, lat2, lon2, unit) {
-        	var radlat1 = Math.PI * lat1/180
-        	var radlat2 = Math.PI * lat2/180
-        	var theta = lon1-lon2
-        	var radtheta = Math.PI * theta/180
-        	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-        	dist = Math.acos(dist)
-        	dist = dist * 180/Math.PI
-        	dist = dist * 60 * 1.1515
-        	if (unit=="K") { dist = dist * 1.609344 }
-        	if (unit=="N") { dist = dist * 0.8684 }
-        	return dist
-        }
-
-          if (distance(latLng.lat, latLng,lng, 41.826867, -71.402973)) {
-
-          }
         }
         // The marker already exists, so we'll just change its position.
         else {
           marker.setPosition(latLng);
         }
 
+        document.getElementById("location").innerHTML = (distance(latLng.lat, latLng.lng, 41.825753, -71.403183, "K") );
+        if (distance(latLng.lat, latLng.lng, 41.825753, -71.403183, "K") < 0.1 && Session.get("waterLevel") > 700) {
+          document.getElementById("yay").innerHTML = "YES!!";
+          Meteor.call('sendEmail',
+           '9737234645@txt.att.net',
+           'hi.drate@gmail.com',
+           'Hey there!',
+           'Time to fill up that water bottle friend!');
+        }
+
         // Center and zoom the map view onto the current position.
         map.instance.setCenter(marker.getPosition());
         map.instance.setZoom(MAP_ZOOM);
+
+
       });
     });
-  });
-
-  Template.body.events({
-    'click button': function () {
-      Meteor.call('sendEmail',
-            '9737234645@txt.att.net',
-            'water@brown.edu',
-            'Hello from Meteor!',
-            'This is a test of Email.send.');
-    }
   });
 
   Template.map.helpers({
@@ -92,10 +95,17 @@ if (Meteor.isClient) {
       }
     }
   });
+
+Template.body.events({
+  'click #updateData': function() {
+    $.getJSON("https://api.particle.io/v1/devices/2a0033000a47343232363230/analogvalue?access_token=b3a37050b8109deebfc7229155d24069b6dc2f1b",
+    function(data) {
+      console.log(data["result"]);
+      Session.set("waterLevel", data["result"]);
+    });
+  }
+})
 }
-
-
-
 
 
 
