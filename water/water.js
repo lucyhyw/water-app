@@ -60,14 +60,16 @@ if (Meteor.isClient) {
           marker.setPosition(latLng);
         }
 
-        document.getElementById("location").innerHTML = (distance(latLng.lat, latLng.lng, 41.825753, -71.403183, "K") );
+        document.getElementById("location").innerHTML = "Distance to closet water fountain: " + Math.round((distance(latLng.lat, latLng.lng, 41.825753, -71.403183, "K") ) * 1000) + "m";
         if (distance(latLng.lat, latLng.lng, 41.825753, -71.403183, "K") < 0.1 && Session.get("waterLevel") > 700) {
-          document.getElementById("yay").innerHTML = "YES!!";
           Meteor.call('sendEmail',
-           '9737234645@txt.att.net',
+           Session.get("cell-number") + '@txt.att.net',
            'hi.drate@gmail.com',
            'Hey there!',
-           'Time to fill up that water bottle friend!');
+           'Time to fill up that water bottle, friend!');
+           document.getElementById("volume").innerHTML = "Your water bottle is empty! You may be thirsty!"
+        } else if (Session.get("waterLevel") < 700) {
+          document.getElementById("volume").innerHTML = "Your water bottle is not empty!"
         }
 
         // Center and zoom the map view onto the current position.
@@ -77,7 +79,7 @@ if (Meteor.isClient) {
 
       });
     });
-  });
+  }),
 
   Template.map.helpers({
     geolocationError: function() {
@@ -102,67 +104,15 @@ Template.body.events({
     function(data) {
       console.log(data["result"]);
       Session.set("waterLevel", data["result"]);
-    });
-  }
+    }
+  )},
+    "click #cell-submit": function() {
+      console.log($("#cell-number").val())
+      Session.set("cell-number", $("#cell-number").val());
+      document.getElementById("phoneNumber").innerHTML = Session.get("cell-number")
+    }
 })
 }
-
-
-
-
-
-
-
-    //   var coords = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    //
-    //   var options = {
-    //     zoom: 15,
-    //     center: coords,
-    //     mapTypeControl: false,
-    //     navigationControlOptions: {
-    //      style: google.maps.NavigationControlStyle.SMALL
-    //     },
-    //     mapTypeId: google.maps.MapTypeId.ROADMAP
-    //   };
-    //   var map = new google.maps.Map(document.getElementById("mapcontainer"), options);
-    //
-    //   var marker = new google.maps.Marker({
-    //       position: coords,
-    //       map: map,
-    //       title:"You are here!"
-    //   });
-    //   var geocoder = new google.maps.Geocoder();
-    //   var waterFountainLocation = geocodeAddress(geocoder, map);
-    //   function geocodeAddress(geocoder, resultsMap) {
-    //   var address = "1 Prospect St Providence, RI 02912";
-    //   geocoder.geocode({'address': address}, function(results, status) {
-    //     if (status === google.maps.GeocoderStatus.OK) {
-    //       resultsMap.setCenter(results[0].geometry.location);
-    //       var marker = new google.maps.Marker({
-    //         map: resultsMap,
-    //         position: results[0].geometry.location
-    //       });
-    //     } else {
-    //       alert('Geocode was not successful for the following reason: ' + status);
-    //     }
-    //   });
-    // }
-    //   // Create a marker and set its position.
-    //   var waterFountain1 = new google.maps.Marker({
-    //     map: map,
-    //     position: waterFountainLocation,
-    //     title: 'My First Water Fountain'
-    //   });
-    // }
-    //
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(success);
-    // } else {
-    //   error('Geo Location is not supported');
-    // }
-    // }
-
-
 
 Meteor.methods({
   sendEmail: function (to, from, subject, text) {

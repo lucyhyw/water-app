@@ -1,34 +1,100 @@
 <head>
   <title>water</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <!-- Bootstrap Core CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom CSS -->
+  <link href="css/grayscale.css" rel="stylesheet">
+
+  <!-- Custom Fonts -->
+  <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+  <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <script>
+  /*!
+   * Start Bootstrap - Grayscale Bootstrap Theme (http://startbootstrap.com)
+   * Code licensed under the Apache License v2.0.
+   * For details, see http://www.apache.org/licenses/LICENSE-2.0.
+   */
+
+
+  // jQuery for page scrolling feature - requires jQuery Easing plugin
+  $(function() {
+      $('a.page-scroll').bind('click', function(event) {
+          var $anchor = $(this);
+          $('html, body').stop().animate({
+              scrollTop: $($anchor.attr('href')).offset().top
+          }, 1500, 'easeInOutExpo');
+          event.preventDefault();
+      });
+  });
+
+  </script>
+
 </head>
 
-<body>
-  <div id = "title">
-    <h1>HIIDRAT</h1>
-  </div>
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
-  <div id = "caption">
-    <h3>By: Lucy Wei, Ankita Sharma, Jane Han, & Mark Liang</h3>
-  </div>
 
-  <div id = "logo">
-    <img src= "logo.jpg"/>
-  </div>
+  <!-- Intro Header -->
+  <header class="intro">
+      <div class="intro-body">
+          <div class="container">
+              <div class="row">
+                  <div class="col-md-8 col-md-offset-2">
+                      <h1 class="brand-heading"><img src="hidrate.png"></h1>
+                      <p class="intro-text">Water Yourself. <br />Introducing the first <a href="https://en.wikipedia.org/wiki/Geolocation">Geolocation</a> enabled smart water bottle.</p>
+                      <input type="text" id="cell-number" placeholder="Get notifications on your phone!">
+                      <a href="#app" class="btn btn-circle page-scroll" id="cell-submit">
+                          >
+                      </a>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </header>
+  <section id="app">
 
-  <div id = "team">
+  <!-- <div id = "team">
     <img src = "teamphoto.jpg"/>
-  </div>
-
-  <article>
-  </article>
-
+  </div> -->
   {{> map}}
+</section>
+
+<!-- <div id = "title">
+  <h1>HIIDRAT</h1>
+</div>
+
+<div id = "caption">
+  <h3>By: Lucy Wei, Ankita Sharma, Jane Han, & Mark Liang</h3>
+</div>
+
+<div id = "logo">
+  <img src= "logo.jpg"/>
+</div>-->
+
+
 </body>
 <template name="hello">
   <button>Time to Hydrate</button>
   <p>You've pressed the button {{counter}} times.</p>
 </template>
 <template name="map">
+  <h2 style="text-align:center">Water fountains near you</h2>
   <div class="map-container">
     {{#unless geolocationError}}
       {{> googleMap name="map" options=mapOptions}}
@@ -36,11 +102,11 @@
       Geolocation failed: {{geolocationError}}
     {{/unless}}
   </div>
+  <div id="phoneNumber">
+  </div>
   <div id="location">
   </div>
-  <div id="yay"></div>
-  
-  <div id = "button">
-  <button id="updateData">Update my Water Level!</button>
-  </div>
+  <div id="volume">No data from water bottle</div>
+
+  <button id="updateData" class="btn btn-primary">Update my Water Level!</button>
 </template>

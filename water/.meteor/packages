@@ -28,3 +28,5 @@ meteorhacks:npm
 npm-container
 email
 dburles:google-maps
+twbs:bootstrap
+mrt:jquery-easing
